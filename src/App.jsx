@@ -815,9 +815,10 @@ const handleResolveReport = async (reportId) => {
         {report.status !== "RESOLVED" ? (
           <button
             type="button"
+            className="resolve-button"
             onClick={() => handleResolveReport(report.reportId)}
           >
-            Mark as Resolved
+            ✓ Mark as Resolved
           </button>
         ) : (
           <p>✅ Resolved</p>
