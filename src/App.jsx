@@ -22,9 +22,9 @@ function App() {
   return () => clearInterval(interval);
 }, []);
 
-  // =========================
+  
   // PHOTO CHANGE
-  // =========================
+  
 
   const handlePhotoChange = (event) => {
     const file = event.target.files[0];
@@ -34,9 +34,9 @@ function App() {
     }
   };
 
-  // =========================
+  
   // SUBMIT REPORT
-  // =========================
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -146,9 +146,9 @@ const handleResolveReport = async (reportId) => {
 };
 
 
-  // =========================
+  
   // OPEN REPORT PAGE
-  // =========================
+  
 
   const openReportPage = () => {
     setPhoto(null);
@@ -165,9 +165,9 @@ const handleResolveReport = async (reportId) => {
     });
   };
 
-  // =========================
+ 
   // GO HOME
-  // =========================
+
 
   const goHome = () => {
     setShowReport(false);
@@ -179,15 +179,15 @@ const handleResolveReport = async (reportId) => {
     });
   };
 
-  // =========================
+ 
   // REPORT PAGE
-  // =========================
+
 
   if (showReport) {
     return (
       <div className="app">
 
-        {/* ================= NAVBAR ================= */}
+        {/*  NAVBAR  */}
 
         <nav className="navbar">
 
@@ -217,7 +217,7 @@ const handleResolveReport = async (reportId) => {
 
         </nav>
 
-        {/* ================= REPORT PAGE ================= */}
+        {/*  REPORT PAGE  */}
 
         <main className="report-page">
 
@@ -246,7 +246,7 @@ const handleResolveReport = async (reportId) => {
               onSubmit={handleSubmit}
             >
 
-              {/* ================= PHOTO ================= */}
+              {/*  PHOTO  */}
 
               <div className="form-group">
 
@@ -298,7 +298,7 @@ const handleResolveReport = async (reportId) => {
 
               </div>
 
-              {/* ================= LOCATION ================= */}
+              {/*  LOCATION */}
 
               <div className="form-group">
 
@@ -327,7 +327,7 @@ const handleResolveReport = async (reportId) => {
 
               </div>
 
-              {/* ================= DESCRIPTION ================= */}
+              {/*  DESCRIPTION */}
 
               <div className="form-group">
 
@@ -353,7 +353,7 @@ const handleResolveReport = async (reportId) => {
 
               </div>
 
-              {/* ================= SUBMIT ================= */}
+              {/*  SUBMIT  */}
 
               <button
                 type="submit"
@@ -375,7 +375,7 @@ const handleResolveReport = async (reportId) => {
             </form>
           ) : (
 
-            /* ================= SUCCESS ================= */
+            /*  SUCCESS  */
 
             <div className="success-card">
 
@@ -406,7 +406,7 @@ const handleResolveReport = async (reportId) => {
               )}
 
 
-{/* ================= REPORT ANALYSIS ================= */}
+{/*  REPORT ANALYSIS  */}
 
 {analysis && (
   <div className="demo-analysis">
@@ -445,7 +445,7 @@ const handleResolveReport = async (reportId) => {
   </div>
 )}
 
-{/* ================= BACK BUTTON ================= */}
+{/*  BACK BUTTON */}
 
 <button
   className="primary-button"
@@ -459,7 +459,7 @@ const handleResolveReport = async (reportId) => {
 
         </main>
 
-        {/* ================= FOOTER ================= */}
+        {/*  FOOTER  */}
 
         <footer className="footer">
 
@@ -485,14 +485,14 @@ const handleResolveReport = async (reportId) => {
     );
   }
 
-  // =========================
+  
   // HOME PAGE
-  // =========================
+  
 
   return (
     <div className="app">
 
-      {/* ================= NAVBAR ================= */}
+      {/*  NAVBAR */}
 
       <nav className="navbar">
 
@@ -542,7 +542,7 @@ const handleResolveReport = async (reportId) => {
 
       </nav>
 
-      {/* ================= HERO ================= */}
+      {/*  HERO  */}
 
       <section
         className="hero-section"
@@ -585,7 +585,7 @@ const handleResolveReport = async (reportId) => {
 
           </div>
 
-          {/* ================= STATS ================= */}
+          {/*  STATS */}
 
           <div className="hero-stats">
 
@@ -629,7 +629,7 @@ const handleResolveReport = async (reportId) => {
 
         </div>
 
-        {/* ================= HERO VISUAL ================= */}
+        {/*  HERO VISUAL  */}
 
         <div className="hero-visual">
 
@@ -723,8 +723,8 @@ const handleResolveReport = async (reportId) => {
 
       </section>
 
-      
-{/* ================= WASTE HOTSPOT INTELLIGENCE ================= */}
+
+{/*  WASTE HOTSPOT INTELLIGENCE  */}
 
 <section className="problem-section" id="waste-hotspots">
   <div className="section-heading">
@@ -733,7 +733,7 @@ const handleResolveReport = async (reportId) => {
       Waste Hotspot <span>Intelligence.</span>
     </h2>
     <p>
-      Discover locations with the highest number of reported waste
+      Discover locations with the highest number of unresolved waste
       problems and help prioritize cleanup efforts.
     </p>
   </div>
@@ -754,9 +754,11 @@ const handleResolveReport = async (reportId) => {
       }}
     >
       <div className="feature-icon">📊</div>
+
       <h3>
         {showHotspots ? "Hide Hotspots ▲" : "View Waste Hotspots ▼"}
       </h3>
+
       <p>
         {dashboardData?.stats?.hotspots?.length
           ? `${dashboardData.stats.hotspots.length} locations analyzed. Click to view hotspot details.`
@@ -773,12 +775,22 @@ const handleResolveReport = async (reportId) => {
           dashboardData.stats.hotspots.map((hotspot) => (
             <div className="feature-card" key={hotspot.location}>
               <div className="feature-icon">📍</div>
+
               <h3>{hotspot.location}</h3>
+
               <p>
-                {hotspot.reportCount} reported waste issue
+                {hotspot.reportCount} total report
                 {hotspot.reportCount !== 1 ? "s" : ""}
               </p>
-              <strong>{hotspot.priority} Hotspot Priority</strong>
+
+              <p>
+                {hotspot.unresolvedCount ?? 0} unresolved report
+                {(hotspot.unresolvedCount ?? 0) !== 1 ? "s" : ""}
+              </p>
+
+              <strong>
+                {hotspot.priority} Cleanup Priority
+              </strong>
             </div>
           ))
         ) : (
@@ -792,9 +804,7 @@ const handleResolveReport = async (reportId) => {
 </section>
 
 
-
-
-{/* ================= REPORT RESOLUTION ================= */}
+{/* REPORT RESOLUTION  */}
 
 <section className="problem-section" id="report-resolution">
   <div className="section-heading">
@@ -880,7 +890,7 @@ const handleResolveReport = async (reportId) => {
 </section>
 
 
-{/* ================= WASTE TYPE ANALYTICS ================= */}
+{/*  WASTE TYPE ANALYTICS  */}
 
 <section className="problem-section" id="waste-analytics">
   <div className="section-heading">
@@ -916,7 +926,7 @@ const handleResolveReport = async (reportId) => {
 
 
 
-      {/* ================= PROBLEM ================= */}
+      {/*  PROBLEM  */}
 
       <section
         className="problem-section"
@@ -1001,7 +1011,7 @@ const handleResolveReport = async (reportId) => {
 
       </section>
 
-      {/* ================= WORKFLOW ================= */}
+      {/*  WORKFLOW  */}
 
       <section
         className="workflow-section"
@@ -1122,7 +1132,7 @@ const handleResolveReport = async (reportId) => {
 
       </section>
 
-      {/* ================= IMPACT ================= */}
+      {/*  IMPACT  */}
 
       <section className="impact-section">
 
@@ -1154,7 +1164,7 @@ const handleResolveReport = async (reportId) => {
 
       </section>
 
-      {/* ================= FOOTER ================= */}
+      {/*  FOOTER */}
 
       <footer className="footer">
 
