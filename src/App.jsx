@@ -778,38 +778,14 @@ function App() {
           <div className="feature-icon">♻️</div>
           <h3>{type}</h3>
           <p>{count} report{count !== 1 ? "s" : ""}</p>
-          <div
-            style={{
-              background: "#dcefe3",
-              borderRadius: "8px",
-              height: "10px",
-              overflow: "hidden",
-              marginTop: "12px",
-            }}
-          >
-            <div
-              style={{
-                background: "#159447",
-                height: "100%",
-                width: `${
-                  count /
-                  Math.max(
-                    1,
-                    ...Object.values(
-                      dashboardData?.stats?.byWasteType || {}
-                    )
-                  ) *
-                  100
-                }%`,
-                borderRadius: "8px",
-              }}
-            />
-          </div>
         </div>
       )
     )}
   </div>
 </section>
+
+
+
 
 
 
