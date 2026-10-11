@@ -50,6 +50,19 @@ Make waste reporting easier, improve visibility into local waste problems, and h
 
 **Try EcoTrack AI:** https://main.d27as80dtfkeqp.amplifyapp.com/
 
+## 📸 Application Screenshots
+
+### 🏠 Home Page
+![EcoTrack AI Home Page](screenshots/homepage.png)
+
+### 📝 Waste Reporting
+![Waste Reporting Form](screenshots/report-waste.png)
+
+### 📊 Dashboard Insights
+![EcoTrack AI Dashboard Insights](screenshots/dashboard-insights.png)
+
+
+
 The application supports the following workflow:
 
 1. Submit a waste report with a photo, location, and description.
