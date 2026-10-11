@@ -11,6 +11,7 @@ function App() {
   const [analysis, setAnalysis] = useState(null);
   const [dashboardData, setDashboardData] = useState(null);
   const [showHotspots, setShowHotspots] = useState(false);
+  const [showReports, setShowReports] = useState(false);
   useEffect(() => {
   fetchDashboardData();
 
@@ -791,6 +792,8 @@ const handleResolveReport = async (reportId) => {
 </section>
 
 
+
+
 {/* ================= REPORT RESOLUTION ================= */}
 
 <section className="problem-section" id="report-resolution">
@@ -800,32 +803,80 @@ const handleResolveReport = async (reportId) => {
       Manage <span>Reports.</span>
     </h2>
     <p>
-      Review submitted reports and mark completed cleanup work as resolved.
+      Review submitted reports and track cleanup progress.
     </p>
   </div>
 
-  <div className="feature-grid">
-    {(dashboardData?.reports || []).map((report) => (
-      <div className="feature-card" key={report.reportId}>
-        <h3>{report.location || "Unknown location"}</h3>
-        <p>{report.wasteType || report.classification || "Waste report"}</p>
-        <p>Status: {report.status || "REPORTED"}</p>
-        <p>Priority: {report.priority || "Not specified"}</p>
+  {/* Centered toggle card */}
+  <div
+    className="feature-grid"
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      width: "100%",
+    }}
+  >
+    <div
+      className="feature-card"
+      onClick={() => setShowReports(!showReports)}
+      style={{ cursor: "pointer" }}
+    >
+      <div className="feature-icon">📋</div>
 
-        {report.status !== "RESOLVED" ? (
-          <button
-            type="button"
-            className="resolve-button"
-            onClick={() => handleResolveReport(report.reportId)}
-          >
-            ✓ Mark as Resolved
-          </button>
-        ) : (
-          <p>✅ Resolved</p>
-        )}
-      </div>
-    ))}
+      <h3>
+        {showReports ? "Hide Reports ▲" : "View Reports ▼"}
+      </h3>
+
+      <p>
+        {dashboardData?.stats?.totalReports ?? 0} reports available.
+        Click to view report details.
+      </p>
+    </div>
   </div>
+
+  {/* Expandable report cards */}
+  {showReports && (
+    <div
+      className="feature-grid"
+      style={{
+        marginTop: "24px",
+        paddingTop: "0",
+        rowGap: "24px",
+      }}
+    >
+      {(dashboardData?.reports || []).map((report) => (
+        <div className="feature-card" key={report.reportId}>
+          <div className="feature-icon">♻️</div>
+
+          <h3>{report.location || "Unknown location"}</h3>
+
+          <p>
+            {report.wasteType ||
+              report.classification ||
+              "Waste report"}
+          </p>
+
+          <p>Status: {report.status || "REPORTED"}</p>
+          <p>Priority: {report.priority || "Not specified"}</p>
+
+          {report.status !== "RESOLVED" ? (
+            <button
+              type="button"
+              className="resolve-button"
+              onClick={(event) => {
+                event.stopPropagation();
+                handleResolveReport(report.reportId);
+              }}
+            >
+              ✓ Mark as Resolved
+            </button>
+          ) : (
+            <p>✅ Resolved</p>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
 </section>
 
 
@@ -843,7 +894,10 @@ const handleResolveReport = async (reportId) => {
     </p>
   </div>
 
-  <div className="feature-grid">
+  <div
+  className="feature-grid"
+  style={{ display: "flex", justifyContent: "center" }}
+>
     {Object.entries(dashboardData?.stats?.byWasteType || {}).map(
       ([type, count]) => (
         <div className="feature-card" key={type}>
