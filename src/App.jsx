@@ -111,6 +111,40 @@ function App() {
   }
 };
 
+
+const handleResolveReport = async (reportId) => {
+  if (!reportId) {
+    alert("Report ID is missing.");
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://42qwrj5euf.execute-api.ap-south-1.amazonaws.com/resolve",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ reportId }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.message || "Unable to resolve report.");
+    }
+
+    alert("Report marked as resolved!");
+    await fetchDashboardData();
+  } catch (error) {
+    console.error("Resolve report error:", error);
+    alert(error.message || "Unable to resolve report.");
+  }
+};
+
+
   // =========================
   // OPEN REPORT PAGE
   // =========================
@@ -753,6 +787,43 @@ function App() {
         )}
       </div>
     )}
+  </div>
+</section>
+
+
+{/* ================= REPORT RESOLUTION ================= */}
+
+<section className="problem-section" id="report-resolution">
+  <div className="section-heading">
+    <span className="section-label">REPORT MANAGEMENT</span>
+    <h2>
+      Manage <span>Reports.</span>
+    </h2>
+    <p>
+      Review submitted reports and mark completed cleanup work as resolved.
+    </p>
+  </div>
+
+  <div className="feature-grid">
+    {(dashboardData?.reports || []).map((report) => (
+      <div className="feature-card" key={report.reportId}>
+        <h3>{report.location || "Unknown location"}</h3>
+        <p>{report.wasteType || report.classification || "Waste report"}</p>
+        <p>Status: {report.status || "REPORTED"}</p>
+        <p>Priority: {report.priority || "Not specified"}</p>
+
+        {report.status !== "RESOLVED" ? (
+          <button
+            type="button"
+            onClick={() => handleResolveReport(report.reportId)}
+          >
+            Mark as Resolved
+          </button>
+        ) : (
+          <p>✅ Resolved</p>
+        )}
+      </div>
+    ))}
   </div>
 </section>
 
